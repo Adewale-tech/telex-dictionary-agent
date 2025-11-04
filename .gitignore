@@ -1,0 +1,37 @@
+# Update .gitignore
+cat > .gitignore << 'EOF'
+# Virtual Environment
+venv/
+env/
+ENV/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# Environment variables
+.env
+.env.local
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Logs
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
+
+# But DON'T ignore these:
+# !railway.toml
+# !Procfile
+# !runtime.txt
+# !requirements.txt
+EOF
