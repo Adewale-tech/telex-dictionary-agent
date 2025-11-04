@@ -1,0 +1,54 @@
+{
+  "name": "SmartDict Bot",
+  "version": "1.0.0",
+  "description": "A smart dictionary agent that provides instant word definitions, meanings, and examples using the Free Dictionary API.",
+  "author": {
+    "name": "Waliyullah Osman",
+    "email": "waliyullahadewale30@gmail.com"
+  },
+  "capabilities": [
+    {
+      "type": "message",
+      "description": "Responds to word lookup requests with definitions, part of speech, and examples"
+    },
+    {
+      "type": "command",
+      "commands": [
+        {
+          "name": "define",
+          "description": "Look up the definition of a word",
+          "usage": "define [word]",
+          "examples": ["define ephemeral", "define serendipity"]
+        },
+        {
+          "name": "meaning",
+          "description": "Get the meaning of a word",
+          "usage": "meaning [word]",
+          "examples": ["meaning eloquent"]
+        },
+        {
+          "name": "help",
+          "description": "Show usage instructions",
+          "usage": "help"
+        }
+      ]
+    }
+  ],
+  "endpoints": {
+    "webhook": "/a2a/message",
+    "health": "/health",
+    "info": "/info"
+  },
+  "protocol": {
+    "type": "a2a",
+    "version": "1.0",
+    "format": "json-rpc"
+  },
+  "tags": ["dictionary", "definitions", "education", "reference", "learning"],
+  "icon": "📖",
+  "homepage": "https://github.com/Adewale-tech/telex_dictionary.git",
+  "support": {
+    "email": "waliyullahadewale30@gmail.com",
+    "documentation": "https://github.com/Adewale-tech/telex_dictionary.git#readme"
+  }
+}
