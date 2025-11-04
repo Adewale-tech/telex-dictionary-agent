@@ -5,7 +5,10 @@ import logging
 import sys
 import os
 
+
+PORT = int(os.getenv("PORT", 8000))
 # Logging
+
 logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
