@@ -1,6 +1,6 @@
 import logging
 from typing import Dict, Any
-from dictionary_agent import DictionaryAgent
+from src.dictionary_agent import DictionaryAgent
 
 logger = logging.getLogger(__name__)
 
