@@ -1,0 +1,36 @@
+{
+  "active": true,
+  "category": "education",
+  "description": "A dictionary agent that provides instant word definitions, meanings, and examples",
+  "id": "smartdict_bot_v1",
+  "name": "smartdict_agent",
+  "long_description": "You are SmartDict Bot, a helpful dictionary assistant that provides accurate word definitions, meanings, examples, and synonyms.\n\nYour primary function is to help users look up word definitions instantly. When responding:\n- Always provide the definition for the word requested\n- Include part of speech (noun, verb, adjective, etc.)\n- Add example sentences when available\n- Include synonyms if applicable\n- If no word is provided, ask the user for a word to look up\n- If the word is not found, politely inform the user and suggest checking the spelling\n- Keep responses well-formatted and easy to read\n- Support commands: 'define [word]', 'meaning [word]', or just '[word]'\n\nYou fetch data from the Free Dictionary API to provide accurate, real-time definitions.",
+  "short_description": "Get instant definitions, meanings, and examples for any word",
+  "nodes": [
+    {
+      "id": "dictionary_agent",
+      "name": "SmartDict Bot",
+      "parameters": {
+        "commands": ["define", "meaning", "help"],
+        "capabilities": ["definitions", "examples", "synonyms", "part_of_speech"]
+      },
+      "position": [850, -120],
+      "type": "a2a/dictionary-agent-node",
+      "typeVersion": 1,
+      "url": "telex-dictionary-agent-production.up.railway.app/a2a/message"
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1",
+    "saveExecutionProgress": true,
+    "saveManualExecutions": true
+  },
+  "tags": ["dictionary", "education", "reference", "learning", "definitions"],
+  "meta": {
+    "author": "Your Name",
+    "version": "1.0.0",
+    "created": "2024-11-05",
+    "protocol": "A2A"
+  }
+}
