@@ -78,25 +78,26 @@ class A2AHandler:
             )
     
     async def _handle_message(self, params: Dict[str, Any], request_id: str) -> Dict[str, Any]:
-        """Handle incoming message"""
+        """Handle incoming message - Telex optimized format"""
         try:
-            # Extract message content
+            # Extract message content (try multiple field names)
             message_text = (
                 params.get("message") or
                 params.get("text") or
                 params.get("content") or
+                params.get("input") or
                 ""
             )
             
             user_info = params.get("user", {})
             channel_info = params.get("channel", {})
             
-            user_id = user_info.get("id", "unknown")
-            channel_id = channel_info.get("id", "unknown")
+            user_id = user_info.get("id", "unknown") if isinstance(user_info, dict) else str(user_info)
+            channel_id = channel_info.get("id", "unknown") if isinstance(channel_info, dict) else str(channel_info)
             
-            logger.info(f"📝 Message from user {user_id} in channel {channel_id}: {message_text}")
+            logger.info(f"📝 Message from user {user_id} in channel {channel_id}: '{message_text}'")
             
-            if not message_text:
+            if not message_text or len(message_text.strip()) == 0:
                 return self._create_error_response(
                     request_id,
                     -32602,
@@ -106,20 +107,33 @@ class A2AHandler:
             # Process with dictionary agent
             bot_response = self.agent.process_message(message_text)
             
-            logger.info(f"🤖 Generated response: {bot_response[:100]}...")
+            logger.info(f"🤖 Generated response ({len(bot_response)} chars): {bot_response[:100]}...")
             
-            # Return A2A response
-            return self._create_success_response(
-                request_id,
-                {
-                    "type": "message",
-                    "content": bot_response,
-                    "format": "markdown"
-                }
-            )
+            # Return response in multiple formats for compatibility
+            result = {
+                # Standard fields
+                "type": "message",
+                "content": bot_response,
+                "format": "text",  # Changed from "markdown" to "text"
+                
+                # Alternative fields (Telex might look for these)
+                "message": bot_response,
+                "text": bot_response,
+                "response": bot_response,
+                
+                # Metadata
+                "status": "success",
+                "agent": "SmartDict Bot"
+            }
+            
+            response = self._create_success_response(request_id, result)
+            
+            logger.info(f"✅ Sending response: {str(response)[:200]}...")
+            
+            return response
         
         except Exception as e:
-            logger.error(f"❌ Message handling error: {str(e)}")
+            logger.error(f"❌ Error in _handle_message: {str(e)}", exc_info=True)
             return self._create_error_response(
                 request_id,
                 -32603,
