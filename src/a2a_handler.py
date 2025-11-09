@@ -105,7 +105,7 @@ class A2AHandler:
                 )
             
             # Process with dictionary agent
-            bot_response = await self.agent.process_message(message_text)
+            bot_response = self.agent.process_message(message_text)
             
             logger.info(f"🤖 Generated response ({len(bot_response)} chars): {bot_response[:100]}...")
             

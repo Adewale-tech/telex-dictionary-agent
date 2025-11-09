@@ -93,54 +93,33 @@ Examples:
             return f"❌ An unexpected error occurred. Please try again."
     
     def _format_definition(self, word: str, data: list) -> str:
-        """Format API response - simplified for better display"""
+        """Format API response"""
         try:
             if not data:
                 return f"❌ No definition found for '{word}'."
-            
+
             entry = data[0]
-            phonetic = entry.get('phonetic', '')
             meanings = entry.get('meanings', [])
-            
+
             if not meanings:
                 return f"❌ No meanings found for '{word}'."
-            
-            # Build simpler response
-            response = f"📖 {word.upper()}"
-            
-            if phonetic:
-                response += f" {phonetic}"
-            
-            response += "\n\n"
-            
-            # Add definitions (limit to 2 for clarity)
-            count = 0
-            for meaning in meanings[:2]:  # Limit to 2 meanings
+
+            # Build response
+            response = f"📖 {word.upper()}\n\n"
+
+            for meaning in meanings:
                 part_of_speech = meaning.get('partOfSpeech', 'unknown')
                 definitions = meaning.get('definitions', [])
-                
-                if definitions and count < 2:  # Max 2 definitions total
-                    definition = definitions[0]
-                    def_text = definition.get('definition', '')
-                    example = definition.get('example', '')
-                    
-                    count += 1
-                    response += f"{count}. ({part_of_speech})\n"
-                    response += f"{def_text}\n"
-                    
-                    if example:
-                        response += f"Example: {example}\n"
-                    
+
+                if definitions:
+                    response += f"**{part_of_speech}**\n"
+                    for i, definition in enumerate(definitions[:3]):
+                        def_text = definition.get('definition', '')
+                        response += f"- {def_text}\n"
                     response += "\n"
-            
-            # Add synonyms if available (limit to 3)
-            if meanings and meanings[0].get('synonyms'):
-                synonyms = meanings[0]['synonyms'][:3]
-                if synonyms:
-                    response += f"Similar: {', '.join(synonyms)}\n"
-            
+
             return response.strip()
-        
+
         except Exception as e:
             logger.error(f"Formatting error: {str(e)}")
             return f"Found definition for '{word}' but had trouble formatting it."
