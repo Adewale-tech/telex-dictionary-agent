@@ -24,7 +24,7 @@ app = FastAPI(
 )
 
 # Import A2A handler
-from src.a2a_handler import A2AHandler
+from a2a_handler import A2AHandler
 
 # Initialize
 a2a_handler = A2AHandler()
