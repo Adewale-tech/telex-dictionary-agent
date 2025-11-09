@@ -29,7 +29,7 @@ Examples:
 - eloquent
 """
     
-    def process_message(self, message: str) -> str:
+    async def process_message(self, message: str) -> str:
         """Process incoming messages"""
         message = message.strip()
         message_lower = message.lower()
@@ -48,7 +48,7 @@ Examples:
         if not word:
             return "❓ Please provide a word to look up. Type 'help' for usage instructions."
         
-        return self.lookup_word(word)
+        return await self.lookup_word(word)
     
     def _extract_word(self, message: str) -> Optional[str]:
         """Extract the word from message"""
