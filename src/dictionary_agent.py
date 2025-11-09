@@ -68,7 +68,7 @@ Examples:
         
         return None
     
-    def lookup_word(self, word: str) -> str:
+    async def lookup_word(self, word: str) -> str:
         """Look up word in dictionary API"""
         try:
             url = f"{self.api_base_url}/{word.lower()}"
